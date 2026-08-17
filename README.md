@@ -60,6 +60,8 @@ Google Drive acts as part of the business-facing knowledge workflow.
 
 An n8n automation monitors the configured Drive source for file creation events and sends an operational notification through Pushover.
 
+![Google Drive Change Notification](docs/images/knowledge-notification.png)
+
 This provides a lightweight mechanism for detecting changes to the knowledge environment without requiring someone to continuously monitor the system.
 
 ### Why this matters
@@ -79,6 +81,8 @@ A request enters through a webhook and is passed to an AI agent connected to:
 - an OpenAI chat model
 - a Supabase vector store
 - OpenAI embeddings
+
+![Agentic RAG Architecture](docs/images/rag-architecture.png)
 
 Relevant business context can be retrieved from the vector store and supplied to the agent before it produces a response.
 
@@ -129,6 +133,8 @@ The ElevenLabs operational dashboard provides visibility into signals including:
 - customer satisfaction
 - testing
 - guardrail recommendations
+
+![ElevenLabs Agent Observability](docs/images/elevenlabs-observability.png)
 
 During testing, the system identified conversations around:
 
