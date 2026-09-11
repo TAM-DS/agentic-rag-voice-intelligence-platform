@@ -1,35 +1,34 @@
-# Texas Beautiful Gardens
+# Agentic RAG Knowledge & Voice Intelligence Platform
 
-### Agentic RAG Knowledge & Voice Intelligence Platform
+### Governed Knowledge Retrieval · Agentic Reasoning · Voice AI · Workflow Automation · Observability
 
-Texas Beautiful Gardens demonstrates how business knowledge can be transformed into a maintainable, grounded AI experience for customers and employees.
+A production-oriented AI architecture that transforms organizational knowledge into grounded, conversational intelligence.
 
-The system combines automated knowledge operations, vector retrieval, agentic reasoning, and conversational voice to answer domain-specific questions using the business's own information.
+The platform combines automated knowledge operations, vector retrieval, agentic reasoning, conversational voice, and runtime observability to make specialized organizational knowledge available through natural interaction.
 
-> **The goal wasn't to build another chatbot. It was to make business knowledge available when and where someone needs it.**
+> **The goal wasn't to build another chatbot. It was to design a maintainable intelligence system around organizational knowledge.**
 
 ---
 
-## The Business Problem
+## The Engineering Problem
 
-Garden centers and nurseries depend heavily on specialized employee knowledge.
+Organizations possess enormous amounts of valuable domain knowledge.
 
-Customers ask questions such as:
+The problem is rarely simply whether that information exists.
 
-- What will survive full Texas sun?
-- Which trees work well in the Austin area?
-- What requires the least maintenance?
-- How much water will this plant need?
-- What would work near a patio?
-- Which option best fits a particular landscape?
+The harder questions are:
 
-Experienced employees may know the answers immediately.
+* Where does authoritative knowledge originate?
+* Who maintains it?
+* How does the system detect when knowledge changes?
+* How is that knowledge prepared for retrieval?
+* How does an AI agent determine which context is relevant?
+* How do users interact with the resulting intelligence?
+* How do operators know whether the system is actually working?
 
-But that expertise doesn't always scale across locations, employees, shifts, or customer channels.
+A useful enterprise AI system must address the lifecycle around retrieval—not merely connect an LLM to a vector database.
 
-Texas Beautiful Gardens explores a different approach:
-
-**Turn organizational knowledge into an intelligent system that can retrieve, reason over, and communicate that expertise consistently.**
+This project explores that larger architecture.
 
 ---
 
@@ -50,121 +49,147 @@ flowchart TD
     K --> L["Runtime Observability"]
 ```
 
-The architecture separates **knowledge management**, **retrieval**, **reasoning**, and **interaction** rather than treating RAG as a single monolithic workflow.
+The architecture deliberately separates **knowledge management, retrieval, reasoning, interaction, and operations** rather than treating RAG as one monolithic workflow.
 
 ---
 
 ## 1. Automated Knowledge Operations
 
-Google Drive acts as part of the business-facing knowledge workflow.
+Organizational knowledge changes.
 
-An n8n automation monitors the configured Drive source for file creation events and sends an operational notification through Pushover.
+A useful AI knowledge system therefore needs more than an initial ingestion pipeline—it needs an operational path for maintaining the information on which the intelligence depends.
 
-![Google Drive Change Notification](docs/images/knowledge-notification.png)
+Google Drive and Google Docs serve as business-facing knowledge sources.
 
-This provides a lightweight mechanism for detecting changes to the knowledge environment without requiring someone to continuously monitor the system.
+An n8n automation monitors the configured knowledge environment for file events and triggers operational notifications through Pushover.
 
-### Why this matters
+This creates a lightweight change-awareness mechanism without requiring someone to continuously monitor the underlying AI infrastructure.
 
-The people maintaining business knowledge should not need to understand vector databases, embeddings, or application code simply to manage source material.
+### Engineering principle
 
-Familiar business tools can remain part of the workflow while automation handles the surrounding operational tasks.
+> **The people who possess organizational knowledge should not need to understand embeddings, vector databases, or application code simply to maintain that knowledge.**
+
+Familiar business tools remain part of the workflow while automation handles the surrounding technical operations.
 
 ---
 
 ## 2. Agentic RAG
 
-The question-answering layer is orchestrated through n8n.
+The conversational intelligence layer is orchestrated through n8n.
 
-A request enters through a webhook and is passed to an AI agent connected to:
+Requests enter through a webhook and are passed into an AI workflow connected to:
 
-- an OpenAI chat model
-- a Supabase vector store
-- OpenAI embeddings
+* OpenAI reasoning
+* OpenAI embeddings
+* Supabase vector retrieval
+* PostgreSQL / pgvector
+* organizational knowledge sources
 
-![Agentic RAG Architecture](docs/images/rag-architecture.png)
+Relevant context is retrieved before generation so responses can be grounded in organizational information rather than relying exclusively on general model knowledge.
 
-Relevant business context can be retrieved from the vector store and supplied to the agent before it produces a response.
+### Why retrieval matters
 
-### Why RAG?
+A general-purpose model may possess substantial domain knowledge.
 
-A general-purpose model may know a great deal about gardening.
+It does not automatically possess an organization's current:
 
-It does **not** automatically know the organization's current products, recommendations, pricing, maintenance guidance, or business-specific knowledge.
+* products
+* policies
+* recommendations
+* pricing
+* operating procedures
+* proprietary expertise
+* changing business knowledge
 
-Retrieval-Augmented Generation allows the system to ground responses in relevant information from the organization's own knowledge base rather than relying solely on the model's general knowledge.
+Retrieval provides the context necessary to connect general reasoning capability with organizational truth.
 
----
-
-## 3. Conversational Voice Experience
-
-The intelligence layer is exposed through an ElevenLabs conversational agent: **Texas Beautiful Gardens Sales Expert**.
-
-Instead of requiring customers or employees to interact with another traditional application interface, they can simply ask questions conversationally.
-
-### 🎙️ Try the Live Voice Agent
-
-[Launch Texas Beautiful Gardens Sales Expert](https://elevenlabs.io/app/talk-to?agent_id=agent_3901kz78watbfdjty39y71pswmf8&branch_id=agtbrch_6801kz78wcm8fh4b93ccbnwrf26y)
-
-Try asking:
-
-> "What tree would you recommend for full Texas sun?"
-
-> "I need something low-maintenance for my backyard."
-
-> "What would you recommend for the Austin area?"
-
-**Demo availability:** Supporting services may be paused when not in active use to control infrastructure costs.
+> **Reasoning provides capability. Retrieval provides context. The surrounding architecture determines whether the combination becomes operationally useful.**
 
 ---
 
-## 4. Observability & Evaluation
+## 3. Conversational Voice Intelligence
 
-A conversational AI system shouldn't become a black box once deployed.
+The knowledge system is exposed through an ElevenLabs conversational voice agent.
 
-The ElevenLabs operational dashboard provides visibility into signals including:
+Rather than requiring another dashboard or traditional application interface, users can interact with specialized organizational knowledge conversationally.
 
-- conversation success
-- latency
-- conversation cost
-- duration
-- topics
-- sentiment
-- customer satisfaction
-- testing
-- guardrail recommendations
+The voice layer turns the underlying retrieval and reasoning architecture into an accessible interface while keeping the knowledge and intelligence layers independently maintainable.
 
-![ElevenLabs Agent Observability](docs/images/elevenlabs-observability.png)
+This separation matters.
 
-During testing, the system identified conversations around:
-
-> **Tree Recommendations for Specific Regions (e.g., Austin, Texas)**
-
-This creates another feedback loop: the system can reveal not only whether customers are using it, but **what they're actually asking about**.
+The interface can evolve without redesigning the knowledge architecture, and the knowledge architecture can evolve without changing how users interact with the system.
 
 ---
 
-## Technology
+## 4. Workflow Orchestration
 
-| Layer | Technology |
-|---|---|
-| AI / Reasoning | OpenAI |
-| Automation & Orchestration | n8n |
-| Vector Retrieval | Supabase |
-| Database | PostgreSQL / pgvector |
-| Embeddings | OpenAI Embeddings |
-| Voice Experience | ElevenLabs |
-| Knowledge Workflow | Google Drive / Google Docs |
-| Notifications | Pushover |
-| Integration | Webhooks / REST APIs / JSON |
+n8n acts as the orchestration layer connecting knowledge sources, AI services, retrieval infrastructure, notifications, webhooks, and external interfaces.
+
+This project deliberately distinguishes between:
+
+**Deterministic automation** — operations that should follow defined workflows.
+
+and
+
+**AI reasoning** — operations where interpretation, language understanding, or contextual reasoning creates value.
+
+Not every step needs an agent.
+
+Not every workflow needs custom application code.
+
+> **Use reasoning where reasoning is required. Use deterministic automation where the process can be explicitly defined.**
+
+That distinction reduces unnecessary complexity while preserving AI capability where it provides meaningful value.
+
+---
+
+## 5. Observability & Evaluation
+
+A conversational AI system should not become a black box after deployment.
+
+Operational telemetry provides visibility into signals including:
+
+* conversation success
+* latency
+* conversation cost
+* duration
+* conversation topics
+* sentiment
+* customer satisfaction
+* testing
+* guardrail recommendations
+
+These signals create a feedback loop between system operation and system improvement.
+
+The architecture therefore treats observability as part of the AI system rather than an afterthought.
+
+> **A successful response is only one operational signal.**
+
+A production-oriented AI system also needs evidence about cost, latency, usage patterns, failure modes, and the quality of the interaction itself.
+
+---
+
+## Technology Architecture
+
+| Layer                          | Technology                  |
+| ------------------------------ | --------------------------- |
+| AI / Reasoning                 | OpenAI                      |
+| Agent & Workflow Orchestration | n8n                         |
+| Vector Retrieval               | Supabase                    |
+| Vector Database                | PostgreSQL / pgvector       |
+| Embeddings                     | OpenAI Embeddings           |
+| Voice Intelligence             | ElevenLabs                  |
+| Knowledge Operations           | Google Drive / Google Docs  |
+| Operational Notifications      | Pushover                    |
+| Integration                    | Webhooks / REST APIs / JSON |
 
 ---
 
 ## Engineering Decisions
 
-### Ground the model
+### Ground organizational answers in organizational knowledge
 
-Business-specific recommendations should come from business-specific knowledge.
+Business-specific answers should come from business-specific evidence.
 
 The model provides reasoning and language capabilities; retrieval supplies relevant organizational context.
 
@@ -172,77 +197,96 @@ The model provides reasoning and language capabilities; retrieval supplies relev
 
 Updating knowledge and answering questions are different responsibilities.
 
-Keeping those concerns separate makes the architecture easier to reason about, maintain, and evolve.
+Keeping them separate makes the architecture easier to maintain, reason about, test, and evolve.
 
-### Keep business users close to familiar tools
+### Keep domain experts close to familiar tools
 
-A knowledge system becomes less useful if every update requires an engineer.
+A knowledge system becomes less useful if every knowledge update requires an engineer.
 
-Using familiar document workflows reduces the distance between the people who possess domain expertise and the system consuming it.
+The architecture minimizes the distance between the people who possess domain expertise and the systems consuming that expertise.
 
-### Automate where automation creates value
+### Separate deterministic workflows from AI reasoning
 
-Not every requirement needs another custom service.
+Automation does not become better merely because an LLM is inserted into every step.
 
-The Google Drive → Pushover workflow solves the change-notification requirement without introducing unnecessary application code.
+Defined operations remain deterministic where possible. AI is introduced where interpretation and reasoning justify the additional uncertainty and cost.
 
 ### Make the system observable
 
-A successful response is only one signal.
+Production AI requires more evidence than whether an API returned `200 OK`.
 
-Latency, cost, conversation topics, success rates, testing, and customer-experience indicators provide information needed to operate and improve the system.
+Latency, cost, topics, conversation outcomes, testing, and customer-experience signals provide evidence necessary to operate and improve the system.
+
+### Control infrastructure cost
+
+Supporting services can be paused when they are not required for active demonstrations.
+
+Cost is treated as an architectural constraint rather than something discovered after deployment.
+
+---
+
+## Reference Implementation: Texas Beautiful Gardens
+
+The architecture was implemented against a Texas garden-center knowledge domain.
+
+Garden centers and nurseries depend heavily on specialized employee knowledge.
+
+Customers ask questions such as:
+
+* What will survive full Texas sun?
+* Which trees work well in this region?
+* What requires the least maintenance?
+* How much water will this plant need?
+* What works near a patio?
+* Which option best fits a particular landscape?
+
+Experienced employees may answer these questions immediately.
+
+That expertise, however, does not automatically scale across employees, shifts, locations, or customer channels.
+
+The reference implementation explores how domain expertise can instead become **retrievable, maintainable, conversational organizational intelligence**.
+
+The garden-center domain is the implementation.
+
+**The reusable artifact is the architecture.**
 
 ---
 
 ## Business Value
 
-The value isn't simply that AI can answer a gardening question.
+The value of the system is not that an AI can answer a gardening question.
 
 The larger opportunity is making specialized organizational knowledge:
 
 **Available** — when an expert isn't.
 
-**Consistent** — across customer interactions.
+**Consistent** — across interactions.
 
 **Accessible** — through natural conversation.
 
-**Maintainable** — as business knowledge changes.
+**Maintainable** — as organizational knowledge changes.
 
-**Measurable** — through operational telemetry.
+**Observable** — through operational telemetry.
 
-The same architectural pattern can be applied anywhere valuable organizational knowledge is difficult to distribute consistently.
+**Reusable** — across interfaces and workflows.
+
+The same architectural pattern can be applied wherever valuable domain knowledge is difficult to distribute consistently.
 
 ---
 
-## What I Learned
+## What This Project Demonstrates
 
-The most important lesson from this project was that **RAG is only one component of a useful knowledge system**.
+This implementation demonstrates a broader transition from:
 
-The harder architectural questions are around it:
-
-> Where does knowledge originate?
-
-> Who maintains it?
-
-> How does the system know something changed?
-
-> How is knowledge transformed for retrieval?
-
-> How does the agent find the right context?
-
-> How does the user interact with the intelligence?
-
-> How do we know whether the system is actually working?
-
-Those questions shifted the project from:
-
-**"How do I build a RAG application?"**
+> **“How do I build a RAG application?”**
 
 to:
 
-**"How do I design a maintainable knowledge system around AI?"**
+> **“How do I design and operate a maintainable knowledge intelligence system around AI?”**
 
-That distinction matters.
+RAG is one component.
+
+The engineering system surrounding it determines whether that capability can become useful in production.
 
 ---
 
@@ -250,7 +294,11 @@ That distinction matters.
 
 > **AI is an engineering partner—not a substitute for engineering.**
 
-AI accelerated parts of the implementation, but architecture, integration, grounding, automation, testing, operational decisions, and business outcomes remain engineering responsibilities.
+AI accelerated portions of implementation, but architecture, integration, grounding, workflow design, testing, operational decisions, observability, and business outcomes remain engineering responsibilities.
+
+The objective is not maximum AI.
+
+The objective is the appropriate combination of **reasoning, deterministic automation, organizational knowledge, operational controls, and human judgment**.
 
 ---
 
@@ -258,6 +306,6 @@ AI accelerated parts of the implementation, but architecture, integration, groun
 
 **Working prototype**
 
-The major integration paths have been built and tested across n8n, OpenAI, Supabase, Google Drive, Pushover, and ElevenLabs.
+Major integration paths have been built and tested across n8n, OpenAI, Supabase, Google Drive, Pushover, and ElevenLabs.
 
 Supporting services may be paused when not actively demonstrating the system to avoid unnecessary infrastructure costs.
