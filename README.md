@@ -10,6 +10,23 @@ The platform combines automated knowledge operations, vector retrieval, agentic 
 
 ---
 
+## Build Approach — Low-Code / No-Code Composition
+
+This platform was built by **composing managed, best-in-class services — not by writing a custom application codebase.** There is no `app/` directory here by design: the repository documents the architecture, because the architecture *is* the deliverable.
+
+| Role | Platform |
+| --- | --- |
+| Orchestration (workflows, the AI agent, webhooks, change detection) | **n8n** |
+| Retrieval & vector store | **Supabase** + PostgreSQL / pgvector |
+| Reasoning & embeddings | **OpenAI** |
+| Conversational voice | **ElevenLabs** |
+| Knowledge source (experts maintain it in tools they already use) | **Google Drive / Google Docs** |
+| Operations & alerts | Pushover, runtime observability |
+
+The skill this demonstrates is **integration judgment**: deciding where deterministic automation ends and AI reasoning begins, grounding answers in organizational knowledge, keeping the interface swappable from the knowledge layer, and standing up a working voice-RAG system in days instead of building — and then maintaining — a bespoke codebase. Low-code is a delivery decision, not a limitation: every component is a managed service that can be swapped without rewriting the system.
+
+---
+
 ## The Engineering Problem
 
 Organizations possess enormous amounts of valuable domain knowledge.
@@ -287,6 +304,8 @@ to:
 RAG is one component.
 
 The engineering system surrounding it determines whether that capability can become useful in production.
+
+It also demonstrates **integration delivery**: a production-shaped system composed entirely from managed low-code / no-code platforms, where the value is the architecture and the integration decisions rather than a custom codebase — the ability to assemble best-in-class tools into a working, maintainable system quickly.
 
 ---
 
